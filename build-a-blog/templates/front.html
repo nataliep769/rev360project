@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>My Blog!</h1>
+    <form action = "/newpost" method = "post"> <!-- must add the form ACTION so we are designating where the form is going! This is where we are routing. Need to type in /blog in search bar in order to not get a 404 error -->
+        <label>
+            <h2>Title</h2><!-- will need to enter Python variables. May also need to link title to something -->
+            <input type = "text" name = "title"><!--Curly braces are as if we typed a print statement in the middle of our HTML -->
+            {{ title_error }}
+        </label>
+        <label>
+            <h2>Blog</h2>
+            <textarea name = "blog"></textarea>
+            {{ blog_error }}
+        </label>
+            <input type = "submit" name = "Submit">
+    </form>
+    <!-- will integrate a for loop? -->
+{% endblock %}
