@@ -3,18 +3,23 @@ package com.example.finalproject.controllers;
 import com.example.finalproject.models.User;
 import com.example.finalproject.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
+import javax.validation.Valid;
+import java.util.List;
+
+//Make sure to kill other tasks in order to run the debugger //
 /**
  * Created by Natalie on 7/1/2017.
  */
 @Controller
-@RequestMapping("user")
 public class UserController {
 
     @Autowired
@@ -36,9 +41,21 @@ public class UserController {
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processAddUserForm(@ModelAttribute @Valid User newUser,
-                                       Errors errors, Model model, String verify) {
+                                     Errors errors, Model model, String verify) {
+
+        List<User> users = (List<User>) userDao.findAll();
+
+        for (User dbUser : users) {
+            if (newUser.getUsername().equals(dbUser.getUsername())) {
+                model.addAttribute("title", "New User Form");
+                model.addAttribute("usernameError", "That username is taken. Please choose another");
+                return "user/add";
+            }
+        }
+
 
         if (errors.hasErrors()) {
+            model.addAttribute("title", "New User Form");
             return "user/add";
         }
 
@@ -51,7 +68,17 @@ public class UserController {
         }
 
         if (passwordsMatch) {
-            userDao.save(newUser);
+
+            String password_hash = BCrypt.hashpw(newUser.getPassword(), BCrypt.gensalt());
+            String username = newUser.getUsername();
+            String verify_hash = BCrypt.hashpw(newUser.getPassword(), BCrypt.gensalt());
+            String email = newUser.getEmail();
+            boolean administrator = false;
+            //
+            User hashedUser = new User(username, password_hash, verify_hash, email, administrator);
+            //Update newUser with new values?
+            userDao.save(hashedUser); //need to save the new user with the hashed password
+            model.addAttribute("title", "User added!");
             return "user/index";
         }
 
@@ -61,7 +88,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String displayLoginUserForm(Model model) {
+    public String displayLoginUserForm(@CookieValue(name = "id", required = false) String userIdCookie, //Set required == true for other pages?
+                                       @CookieValue(name = "password", required = false) String passwordCookie,
+                                       Model model) {
 
         model.addAttribute("title", "Login");
         model.addAttribute("user", new User());
@@ -69,21 +98,51 @@ public class UserController {
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST) //change the mapping value?//
-    public String processLoginForm(@ModelAttribute @Valid User user, Errors errors, Model model) {
-        model.addAttribute("title", "Login");
+    public String processLoginForm(@ModelAttribute @Valid User user, Errors errors, Model model, @CookieValue(name = "id", required = false) String userIdCurrent,
+                                   @CookieValue(name = "password", required = false) String passwordCurrent, //passwordCurrent is the Cookie Value//
+                                   HttpServletResponse response) {
 
-        //if (errors.hasErrors()) {
-            //return "user/login";
-        //}
-        //Maybe ask someone about this part below?//
-        //Do I need to get and set the User Id?//
-        if (userDao.exists(user.getUserId())) { //need to define user//
-            return "user/index";
-          //  return //a page that welcomes the user, or send them to the home page of Between the Notes//
-        } else {
+        model.addAttribute("title", "Login");
+        List<User> users = (List<User>) userDao.findAll(); //Iterate over a list of users of type User == a user database object, converted to a list of users that can be iterated through.
+
+        for (User dbUser : users) {
+            if (user.getUsername().equals(dbUser.getUsername()) && BCrypt.checkpw(user.getPassword(), dbUser.getPassword())) {
+
+                int userId = dbUser.getUserId();
+
+                Cookie userIdCookie = new Cookie("id", Integer.toString(userId));
+                Cookie passwordCookie = new Cookie("password", user.getPassword());
+
+                response.addCookie(userIdCookie); //the cookie is being added to the HTTP Servlet Response //
+                response.addCookie(passwordCookie); //the cookies is added in the post method//
+
+                model.addAttribute("title", "Logged in!");
+                return "user/index";
+
+            } else {
+                model.addAttribute("error", "Invalid username and/or password");
+            }
+        }
+        return "user/login";
+    }
+
+    @RequestMapping(value = "logout", method = RequestMethod.GET)
+    public String logOutUser(HttpServletResponse response, Model model) {
+
+        Cookie idCookie = new Cookie("id", "");
+        idCookie.setMaxAge(0);
+        response.addCookie(idCookie);
+
+
+        Cookie passwordCookie = new Cookie("password", "");
+        passwordCookie.setMaxAge(0);
+        response.addCookie(passwordCookie);
+
+
+        model.addAttribute("title", "Logged out!");
+        model.addAttribute("logOutConfirm", "You have been logged out successfully!");
+        model.addAttribute("user", new User());
 
         return "user/login";
-
-        }
     }
 }
