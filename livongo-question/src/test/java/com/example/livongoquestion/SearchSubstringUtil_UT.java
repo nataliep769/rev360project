@@ -7,9 +7,16 @@ import java.util.ArrayList;
 public class SearchSubstringUtil_UT {
 
     @Test
-    public void findMaxRepeat_valid() {
-        ArrayList<String> result = SearchSubstringUtil.buildSubstringList("abc");
+    public void buildSubstringList_valid() {
+        ArrayList<String> result = SearchSubstringUtil.buildSubstringList("abcc");
 
         assertThat(result, containsInAnyOrder("a", "ab", "abc", "c", "bc", "b"));
+    }
+
+    @Test
+    public void findLongestRepeatedSubStringNoOverlap_valid() {
+        String result = SearchSubstringUtil.findLongestRepeatedSubStringNoOverlap("eeeeabcabc");
+
+        assertThat(result, is(equalTo("abc")));
     }
 }
