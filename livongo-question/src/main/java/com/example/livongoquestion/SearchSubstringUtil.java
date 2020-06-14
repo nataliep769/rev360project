@@ -11,8 +11,8 @@ public class SearchSubstringUtil {
         String longestRepeatedSubstring = "";
 
         for (int index = 0; index < substringList.size(); index++) {
-            int occurrences = Collections.frequency(substringList, substringList.get(index));
             String substring = substringList.get(index);
+            int occurrences = Collections.frequency(substringList, substring);
 
             if (occurrences > 1) {
                 ArrayList<Integer> fromIndexes = buildFromIndexList(occurrences, fullString, substring);
