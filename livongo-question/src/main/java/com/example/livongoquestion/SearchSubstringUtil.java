@@ -16,13 +16,7 @@ public class SearchSubstringUtil {
 
             if (occurrences > 1) {
                 ArrayList<Integer> fromIndexes = buildFromIndexList(occurrences, fullString, substring);
-
-                for (int j = 0; j < fromIndexes.size() - 1; j++) {
-                    if ((hasOverlap(fromIndexes, j, substring))) {
-                        occurrences = occurrences - 1;
-                        j++;
-                    }
-                }
+                occurrences = subtractOccurrenceWhenOverlap(fromIndexes, substring, occurrences);
             }
 
             if (substring.length() > longestRepeatedSubstring.length() && occurrences > 1) {
@@ -50,14 +44,20 @@ public class SearchSubstringUtil {
         return fromIndexes;
     }
 
-    /*protected static void subtractOccurrenceWhenOverlap(ArrayList<Integer> fromIndexes, String substring, int occurrences) {
+    protected static int subtractOccurrenceWhenOverlap(
+            ArrayList<Integer> fromIndexes,
+            String substring,
+            int occurrences
+    ) {
         for (int j = 0; j < fromIndexes.size() - 1; j++) {
             if ((hasOverlap(fromIndexes, j, substring))) {
                 occurrences = occurrences - 1;
                 j++;
             }
         }
-    }*/
+
+        return occurrences;
+    }
 
     protected static boolean hasOverlap(ArrayList<Integer> fromIndexes, int index, String substring) {
         return (fromIndexes.get(index + 1) - fromIndexes.get(index)) < substring.length();
