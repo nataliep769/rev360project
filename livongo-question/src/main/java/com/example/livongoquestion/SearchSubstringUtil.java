@@ -13,16 +13,25 @@ public class SearchSubstringUtil {
         for (int index = 0; index < substringList.size(); index++) {
             int occurrences = Collections.frequency(substringList, substringList.get(index));
             String substring = substringList.get(index);
+            // In this whole for loop, we are only looking at one substring at a time
 
             if (occurrences > 1) {
                 ArrayList<Integer> indexes = new ArrayList<>();
                 int fromIndex = -1;
-                for (int i = 0; i <= occurrences; i++) {
+                for (int i = 0; i < occurrences; i++) {
                     fromIndex = fullString.indexOf(substring, fromIndex + 1);
                     indexes.add(fromIndex);
                     // when -1 is returned, it means there is not another index
-                    // when the distance between two
-                    fromIndex = fromIndex + 1;
+                    // when the distance between two indices is less than the length, subtract one from the
+                    // occurrences and then add one to the iteration so as to skip the next iteration...
+                    fromIndex++;
+                }
+
+                for (int j = 0; j < indexes.size() - 1; j++) {
+                    if ((indexes.get(j + 1) - indexes.get(j)) < substring.length()) {
+                        occurrences = occurrences - 1;
+                        j++;
+                    }
                 }
             }
 
@@ -32,13 +41,6 @@ public class SearchSubstringUtil {
 
             // Could collect the ones that have more than one occurrence
         }
-
-        // Maybe need to keep a list of all the indexes?
-
-        // (0, 3) (3, 6) (6, 9)
-        // This overlaps with two... we should have two instances in total
-        /// say our test input is aabaabaaba
-        // should return aaba
 
         return longestRepeatedSubstring;
     }
