@@ -1,5 +1,6 @@
 package com.example.livongoquestion;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -14,13 +15,7 @@ public class SearchSubstringUtil {
             String substring = substringList.get(index);
 
             if (occurrences > 1) {
-                ArrayList<Integer> fromIndexes = new ArrayList<>();
-                int fromIndex = -1;
-                for (int i = 0; i < occurrences; i++) {
-                    fromIndex = fullString.indexOf(substring, fromIndex + 1);
-                    fromIndexes.add(fromIndex);
-                    fromIndex++;
-                }
+                ArrayList<Integer> fromIndexes = buildFromIndexList(occurrences, fullString, substring);
 
                 for (int j = 0; j < fromIndexes.size() - 1; j++) {
                     if ((hasOverlap(fromIndexes, j, substring))) {
@@ -38,6 +33,31 @@ public class SearchSubstringUtil {
 
         return longestRepeatedSubstring;
     }
+
+    protected static ArrayList<Integer> buildFromIndexList(
+            int occurrences,
+            String fullString,
+            String substring
+    ) {
+        ArrayList<Integer> fromIndexes = new ArrayList<>();
+        int fromIndex = -1;
+        for (int i = 0; i < occurrences; i++) {
+            fromIndex = fullString.indexOf(substring, fromIndex + 1);
+            fromIndexes.add(fromIndex);
+            fromIndex++;
+        }
+
+        return fromIndexes;
+    }
+
+    /*protected static void subtractOccurrenceWhenOverlap(ArrayList<Integer> fromIndexes, String substring, int occurrences) {
+        for (int j = 0; j < fromIndexes.size() - 1; j++) {
+            if ((hasOverlap(fromIndexes, j, substring))) {
+                occurrences = occurrences - 1;
+                j++;
+            }
+        }
+    }*/
 
     protected static boolean hasOverlap(ArrayList<Integer> fromIndexes, int index, String substring) {
         return (fromIndexes.get(index + 1) - fromIndexes.get(index)) < substring.length();
