@@ -15,8 +15,8 @@ public class SearchSubstringUtil_UT {
 
     @Test
     public void findLongestRepeatedSubStringNoOverlap_valid() {
-        String result = SearchSubstringUtil.findLongestRepeatedSubStringNoOverlap("eeeeabcabc");
+        String result = SearchSubstringUtil.findLongestRepeatedSubStringNoOverlap("aabaabaaba");
 
-        assertThat(result, is(equalTo("abc")));
+        assertThat(result, is(equalTo("aaba")));
     }
 }
