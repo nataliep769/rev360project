@@ -52,6 +52,7 @@ public class SearchSubstringUtil {
         return fromIndexes;
     }
 
+    //TODO: Need to account for the case of "aaaaaaaa"
     protected static int subtractOccurrenceWhenOverlap(
             ArrayList<Integer> fromIndexes,
             String substring,
@@ -68,7 +69,6 @@ public class SearchSubstringUtil {
     }
 
     protected static boolean hasOverlap(ArrayList<Integer> fromIndexes, int index, String substring) {
-        //TODO: Need to account for the case of "aaaaaaaa"
         return (fromIndexes.get(index + 1) - fromIndexes.get(index)) < substring.length();
     }
 
