@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.*;
 public class SearchSubstringUtil_UT {
 
     @Test
-    public void buildSubstringList_valid() {
+    public void buildSubstringList() {
         ArrayList<String> result = SearchSubstringUtil.buildSubstringList("abc");
 
         assertThat(result, containsInAnyOrder("a", "ab", "abc", "b", "bc", "c"));
@@ -72,7 +72,7 @@ public class SearchSubstringUtil_UT {
         return Stream.of(
                 Arguments.of("aabaabaaba", "aaba"),
                 Arguments.of("nataliehinatalie", "natalie"),
-                Arguments.of("banana", "na")
+                Arguments.of("banana", "an or na")
         );
     }
 }

@@ -19,11 +19,15 @@ public class SearchSubstringUtil {
                 occurencesWithoutOverlap = subtractOccurrenceWhenOverlap(fromIndexes, substring, occurrences);
             }
 
-            if (isSubstringRepeatedAndLongerThanExisting(substring, longestRepeatedSubstring, occurencesWithoutOverlap)) {
-                longestRepeatedSubstring = substring;
-                // include additional test case from before and add a check for if the substrings equal one another
+            if (occurencesWithoutOverlap > 1) {
+                if (substring.length() > longestRepeatedSubstring.length()) {
+                    longestRepeatedSubstring = substring;
+                } else if (substring.length() == longestRepeatedSubstring.length()) {
+                    if (!substring.equals(longestRepeatedSubstring)) {
+                        longestRepeatedSubstring = substring + " or " + longestRepeatedSubstring;
+                    }
+                }
             }
-
         }
 
         return longestRepeatedSubstring;
