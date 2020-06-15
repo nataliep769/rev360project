@@ -36,7 +36,7 @@ public class SearchSubstringUtil_UT {
     @Test
     public void hasOverlap_substringLongerThanIndexRange() {
         // GIVEN
-        ArrayList<Integer> fromIndexes = new ArrayList<Integer>(Arrays.asList(0, 3));
+        ArrayList<Integer> fromIndexes = new ArrayList<>(Arrays.asList(0, 3));
         String substring = "beep";
 
         // WHEN
@@ -49,7 +49,7 @@ public class SearchSubstringUtil_UT {
     @Test
     public void hasOverlap_substringShorterThanIndexRange() {
         // GIVEN
-        ArrayList<Integer> fromIndexes = new ArrayList<Integer>(Arrays.asList(0, 3));
+        ArrayList<Integer> fromIndexes = new ArrayList<>(Arrays.asList(0, 3));
         String substring = "ba";
 
         // WHEN
@@ -57,6 +57,15 @@ public class SearchSubstringUtil_UT {
 
         // EXPECT
         assertThat(result, is(equalTo(false)));
+    }
+
+    @Test
+    public void buildFromIndexList() {
+        // WHEN
+        ArrayList<Integer> fromIndexes = SearchSubstringUtil.buildFromIndexList(3, "heyheyhey", "hey");
+
+        // EXPECT
+        assertThat(fromIndexes, is(equalTo(Arrays.asList(0, 3, 6))));
     }
 
     private static Stream<Arguments> findLongestRepeatedSubstringArgs() {
