@@ -68,6 +68,28 @@ public class SearchSubstringUtil_UT {
         assertThat(fromIndexes, is(equalTo(Arrays.asList(0, 3, 6))));
     }
 
+    @ParameterizedTest
+    @MethodSource("compareLengthsOfSubstringsArgs")
+    public void compareLengthsOfSubstrings(
+            String existingLongestSubstring,
+            String substring,
+            String expected
+    ) {
+        assertThat(
+                SearchSubstringUtil.compareLengthsOfSubstrings(existingLongestSubstring, substring),
+                is(equalTo(expected))
+        );
+    }
+
+    private static Stream<Arguments> compareLengthsOfSubstringsArgs() {
+        return Stream.of(
+                Arguments.of("hi", "hello", "hello"),
+                Arguments.of("hellothere", "hello", "hellothere"),
+                Arguments.of("howdy", "howdy", "howdy"),
+                Arguments.of("howdy", "hello", "howdy or hello")
+        );
+    }
+
     private static Stream<Arguments> findLongestRepeatedSubstringArgs() {
         return Stream.of(
                 Arguments.of("aabaabaaba", "aaba"),

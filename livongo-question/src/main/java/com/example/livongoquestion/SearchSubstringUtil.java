@@ -12,33 +12,31 @@ public class SearchSubstringUtil {
         for (int index = 0; index < substringList.size(); index++) {
             String substring = substringList.get(index);
             int occurrences = Collections.frequency(substringList, substring);
-            int occurencesWithoutOverlap = 0;
+            int occurrencesWithoutOverlap = 0;
 
             if (occurrences > 1) {
                 ArrayList<Integer> fromIndexes = buildFromIndexList(occurrences, fullString, substring);
-                occurencesWithoutOverlap = subtractOccurrenceWhenOverlap(fromIndexes, substring, occurrences);
+                occurrencesWithoutOverlap = subtractOccurrenceWhenOverlap(fromIndexes, substring, occurrences);
             }
 
-            if (occurencesWithoutOverlap > 1) {
-                if (substring.length() > longestRepeatedSubstring.length()) {
-                    longestRepeatedSubstring = substring;
-                } else if (substring.length() == longestRepeatedSubstring.length()) {
-                    if (!substring.equals(longestRepeatedSubstring)) {
-                        longestRepeatedSubstring = substring + " or " + longestRepeatedSubstring;
-                    }
-                }
+            if (occurrencesWithoutOverlap > 1) {
+                longestRepeatedSubstring = compareLengthsOfSubstrings(substring, longestRepeatedSubstring);
             }
         }
 
         return longestRepeatedSubstring;
     }
 
-    protected static boolean isSubstringRepeatedAndLongerThanExisting(
-            String substring,
-            String longestRepeatedSubstring,
-            int occurencesWithoutOverlap
-    ) {
-        return (substring.length() > longestRepeatedSubstring.length()) && occurencesWithoutOverlap > 1;
+    protected static String compareLengthsOfSubstrings(String substring, String longestRepeatedSubstring) {
+        if (substring.length() > longestRepeatedSubstring.length()) {
+            longestRepeatedSubstring = substring;
+        } else if (substring.length() == longestRepeatedSubstring.length()) {
+            if (!substring.equals(longestRepeatedSubstring)) {
+                longestRepeatedSubstring = substring + " or " + longestRepeatedSubstring;
+            }
+        }
+
+        return longestRepeatedSubstring;
     }
 
     protected static ArrayList<Integer> buildFromIndexList(
