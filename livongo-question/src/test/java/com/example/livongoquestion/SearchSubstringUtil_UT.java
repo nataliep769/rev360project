@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -30,6 +31,32 @@ public class SearchSubstringUtil_UT {
                 SearchSubstringUtil.findLongestRepeatedSubStringNoOverlap(fullString),
                 is(equalTo(expectedSubstring))
         );
+    }
+
+    @Test
+    public void hasOverlap_substringLongerThanIndexRange() {
+        // GIVEN
+        ArrayList<Integer> fromIndexes = new ArrayList<Integer>(Arrays.asList(0, 3));
+        String substring = "beep";
+
+        // WHEN
+        boolean result = SearchSubstringUtil.hasOverlap(fromIndexes, 0, substring);
+
+        // EXPECT
+        assertThat(result, is(equalTo(true)));
+    }
+
+    @Test
+    public void hasOverlap_substringShorterThanIndexRange() {
+        // GIVEN
+        ArrayList<Integer> fromIndexes = new ArrayList<Integer>(Arrays.asList(0, 3));
+        String substring = "ba";
+
+        // WHEN
+        boolean result = SearchSubstringUtil.hasOverlap(fromIndexes, 0, substring);
+
+        // EXPECT
+        assertThat(result, is(equalTo(false)));
     }
 
     private static Stream<Arguments> findLongestRepeatedSubstringArgs() {

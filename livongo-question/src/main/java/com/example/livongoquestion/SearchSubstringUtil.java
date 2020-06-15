@@ -21,6 +21,7 @@ public class SearchSubstringUtil {
 
             if (isSubstringRepeatedAndLongerThanExisting(substring, longestRepeatedSubstring, occurencesWithoutOverlap)) {
                 longestRepeatedSubstring = substring;
+                // include additional test case from before and add a check for if the substrings equal one another
             }
 
         }
