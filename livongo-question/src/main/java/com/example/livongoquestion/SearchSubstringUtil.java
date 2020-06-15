@@ -19,7 +19,7 @@ public class SearchSubstringUtil {
                 occurencesWithoutOverlap = subtractOccurrenceWhenOverlap(fromIndexes, substring, occurrences);
             }
 
-            if (isRepeatedSubstringLongerThanExisting(substring, longestRepeatedSubstring, occurencesWithoutOverlap)) {
+            if (isSubstringRepeatedAndLongerThanExisting(substring, longestRepeatedSubstring, occurencesWithoutOverlap)) {
                 longestRepeatedSubstring = substring;
             }
 
@@ -28,7 +28,7 @@ public class SearchSubstringUtil {
         return longestRepeatedSubstring;
     }
 
-    protected static boolean isRepeatedSubstringLongerThanExisting(
+    protected static boolean isSubstringRepeatedAndLongerThanExisting(
             String substring,
             String longestRepeatedSubstring,
             int occurencesWithoutOverlap
