@@ -1,6 +1,5 @@
 package com.example.livongoquestion;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -13,19 +12,28 @@ public class SearchSubstringUtil {
         for (int index = 0; index < substringList.size(); index++) {
             String substring = substringList.get(index);
             int occurrences = Collections.frequency(substringList, substring);
+            int occurencesWithoutOverlap = 0;
 
             if (occurrences > 1) {
                 ArrayList<Integer> fromIndexes = buildFromIndexList(occurrences, fullString, substring);
-                occurrences = subtractOccurrenceWhenOverlap(fromIndexes, substring, occurrences);
+                occurencesWithoutOverlap = subtractOccurrenceWhenOverlap(fromIndexes, substring, occurrences);
             }
 
-            if (substring.length() > longestRepeatedSubstring.length() && occurrences > 1) {
+            if (isRepeatedSubstringLongerThanExisting(substring, longestRepeatedSubstring, occurencesWithoutOverlap)) {
                 longestRepeatedSubstring = substring;
             }
 
         }
 
         return longestRepeatedSubstring;
+    }
+
+    protected static boolean isRepeatedSubstringLongerThanExisting(
+            String substring,
+            String longestRepeatedSubstring,
+            int occurencesWithoutOverlap
+    ) {
+        return (substring.length() > longestRepeatedSubstring.length()) && occurencesWithoutOverlap > 1;
     }
 
     protected static ArrayList<Integer> buildFromIndexList(
