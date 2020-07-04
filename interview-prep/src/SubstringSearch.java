@@ -12,12 +12,32 @@ public class SubstringSearch {
         for (int j = 0; j < characterList.length; j++) {
             for (int i = 0; i < characterList.length; i++) {
                 String substring = fullString.substring(i, j);
-                substringList.add(substring); //1 - 10, 2 - 10, 3 - 10, 4 - 10
+                substringList.add(substring);
             }
         }
 
         System.out.println(substringList);
 
         return substringList;
+    }
+
+    public ListNode findMiddleNode(ListNode head) {
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        if (head != null) {
+
+            if (slow.next != null && fast.next.next != null) {
+
+                fast = fast.next.next;
+                slow = slow.next;
+
+                findMiddleNode(slow);
+            }
+        }
+
+        return slow;
+
     }
 }

@@ -12,11 +12,11 @@ import java.util.stream.Stream;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class SearchSubstringUtil_UT {
+public class StringUtility_UT {
 
     @Test
     public void buildSubstringList() {
-        ArrayList<String> result = SearchSubstringUtil.buildSubstringList("abc");
+        ArrayList<String> result = StringUtility.buildSubstringList("abc");
 
         assertThat(result, containsInAnyOrder("a", "ab", "abc", "b", "bc", "c"));
     }
@@ -28,7 +28,7 @@ public class SearchSubstringUtil_UT {
             String expectedSubstring
     ) {
         assertThat(
-                SearchSubstringUtil.findLongestRepeatedSubStringNoOverlap(fullString),
+                StringUtility.findLongestRepeatedSubStringNoOverlap(fullString),
                 is(equalTo(expectedSubstring))
         );
     }
@@ -40,7 +40,7 @@ public class SearchSubstringUtil_UT {
         String substring = "beep";
 
         // WHEN
-        boolean result = SearchSubstringUtil.hasOverlap(fromIndexes, 0, substring);
+        boolean result = StringUtility.hasOverlap(fromIndexes, 0, substring);
 
         // EXPECT
         assertThat(result, is(equalTo(true)));
@@ -53,7 +53,7 @@ public class SearchSubstringUtil_UT {
         String substring = "ba";
 
         // WHEN
-        boolean result = SearchSubstringUtil.hasOverlap(fromIndexes, 0, substring);
+        boolean result = StringUtility.hasOverlap(fromIndexes, 0, substring);
 
         // EXPECT
         assertThat(result, is(equalTo(false)));
@@ -62,7 +62,7 @@ public class SearchSubstringUtil_UT {
     @Test
     public void buildFromIndexList() {
         // WHEN
-        ArrayList<Integer> fromIndexes = SearchSubstringUtil.buildFromIndexList(3, "heyheyhey", "hey");
+        ArrayList<Integer> fromIndexes = StringUtility.buildFromIndexList(3, "heyheyhey", "hey");
 
         // EXPECT
         assertThat(fromIndexes, is(equalTo(Arrays.asList(0, 3, 6))));
@@ -76,7 +76,7 @@ public class SearchSubstringUtil_UT {
             String expected
     ) {
         assertThat(
-                SearchSubstringUtil.compareLengthsOfSubstrings(existingLongestSubstring, substring),
+                StringUtility.compareLengthsOfSubstrings(existingLongestSubstring, substring),
                 is(equalTo(expected))
         );
     }
@@ -96,5 +96,20 @@ public class SearchSubstringUtil_UT {
                 Arguments.of("nataliehinatalie", "natalie"),
                 Arguments.of("banana", "an or na")
         );
+    }
+
+    @Test
+    public void areAllCharactersUnique() {
+        StringUtility.areAllCharactersUnique("123!@");
+    }
+
+    @Test
+    public void replace() {
+        StringUtility.replace("This is a test", "meep");
+    }
+
+    @Test
+    public void binarySearch() {
+        StringUtility.binarySearch(new int[]{5,6,7,8,9}, 9);
     }
 }
