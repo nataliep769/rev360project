@@ -144,11 +144,11 @@ public class StringUtility {
             chars.add(c);
         }
 
-        for (int i = 0; i < chars.size(); i++) {
-            if (chars.get(i) == (' ')) {
+        for (Character aChar : chars) {
+            if (aChar == (' ')) {
                 stringBuilder.append(b);
             } else {
-                stringBuilder.append(chars.get(i));
+                stringBuilder.append(aChar);
             }
         }
 

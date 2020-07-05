@@ -2,7 +2,7 @@ package com.example.livongoquestion;
 
 public class ListNodeUtil {
 
-    public ListNode findMiddleNode(ListNode head) {
+    public static ListNode findMiddleNode(ListNode head) {
 
         if (head == null) {
             return null;
