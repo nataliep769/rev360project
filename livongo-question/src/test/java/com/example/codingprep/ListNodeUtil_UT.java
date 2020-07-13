@@ -3,7 +3,6 @@ package com.example.codingprep;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
@@ -22,17 +21,5 @@ public class ListNodeUtil_UT {
 
         assertThat(result.data, is(equalTo(3)));
     }
-
-    @Test
-    public void deleteAtTail_circularLinkedList() {
-        ListNode head = new ListNode(1);
-        head.next = new ListNode(2);
-        head.next.next = new ListNode(3);
-        head.next.next.next = new ListNode(4);
-        head.next.next.next.next = head;
-
-        ListNodeUtil.deleteAtTail(head);
-    }
-
 
 }
