@@ -1,4 +1,4 @@
-package com.example.livongoquestion;
+package com.example.codingprep;
 
 public class ListNodeUtil {
 
@@ -19,4 +19,19 @@ public class ListNodeUtil {
         return slow;
 
     }
+
+    public static ListNode deleteAtTail(ListNode head) {
+
+        ListNode subsequent = head.next;
+
+        while (subsequent != head) {
+            subsequent = subsequent.next;
+        }
+
+        subsequent = null;
+
+        return head;
+    }
+
+
 }

@@ -1,15 +1,12 @@
-package com.example.livongoquestion;
+package com.example.codingprep;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 @SpringBootApplication
-public class LivongoQuestion {
+public class CodingPrep {
 
     public static void main(String[] args) {
-        SpringApplication.run(LivongoQuestion.class, args);
+        SpringApplication.run(CodingPrep.class, args);
     }
 }

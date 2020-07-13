@@ -1,4 +1,4 @@
-package com.example.livongoquestion;
+package com.example.codingprep;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -111,5 +111,15 @@ public class StringUtility_UT {
     @Test
     public void binarySearch() {
         StringUtility.binarySearch(new int[]{5,6,7,8,9}, 9);
+    }
+
+    @Test
+    public void selectionSortArray() {
+        StringUtility.selectionSortArray(new int[]{9,4,-1,3,20});
+    }
+
+    @Test
+    public void isIsomorphic() {
+        StringUtility.isIsomorphic("Kendall", "Bfacwzz");
     }
 }

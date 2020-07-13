@@ -1,9 +1,6 @@
-package com.example.livongoquestion;
+package com.example.codingprep;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class StringUtility {
 
@@ -95,7 +92,7 @@ public class StringUtility {
         return substringList;
     }
 
-    public static boolean areAllCharactersUnique(String str){
+    public static boolean areAllCharactersUnique(String str) {
 
         if (str != null) {
 
@@ -103,7 +100,7 @@ public class StringUtility {
 
             for (int i = 0; i < characterArray.length; i++) {
                 for (int j = 1; j < characterArray.length; j++) {
-                    if (characterArray[i] == characterArray[j] && (i !=j)) {
+                    if (characterArray[i] == characterArray[j] && (i != j)) {
                         return false;
                     }
                 }
@@ -113,7 +110,7 @@ public class StringUtility {
         return true;
     }
 
-    public static Boolean binarySearch(int[] arr, int n){
+    public static Boolean binarySearch(int[] arr, int n) {
 
         if (arr != null && arr.length > 0) {
             int low = 0;
@@ -136,6 +133,7 @@ public class StringUtility {
 
         return false;
     }
+
     public static String replace(String a, String b) {
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -155,24 +153,54 @@ public class StringUtility {
         return stringBuilder.toString();
     }
 
-    public static ArrayList<List<String>> voteData = new ArrayList(Arrays.asList(
-            Arrays.asList("GSW", "HOU", "BOS"),
-            Arrays.asList("HOU", "GSW", "BOS"),
-            Arrays.asList("GSW", "BOS", "HOU")
-    ));
-    public static int getVotes(String team1, String team2) {
+    public static int[] selectionSortArray(int[] arr) {
 
-        int winningTeamVotes = 0;
-
-        for (int i = 0; i < voteData.size(); i++) {
-                int team1Index = voteData.get(i).indexOf(team1);
-                int team2Index = voteData.get(i).indexOf(team2);
-
-                if (team1Index < team2Index) {
-                    winningTeamVotes++;
+        int head = 0;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = arr.length - 1; j >= head; j--) {
+                if (arr[j] < arr[i]) {
+                    int temp = arr[j];
+                    arr[j] = arr[i];
+                    arr[i] = temp;
                 }
+            }
+            head = head + 1;
         }
 
-        return winningTeamVotes;
+        return arr;
     }
+
+    public static boolean isIsomorphic(String input1, String input2) {
+
+        char[] characterArray1 = input1.toCharArray();
+        char[] characterArray2 = input2.toCharArray();
+
+        Map<Character, List<Integer>> map1 = new LinkedHashMap<>();
+        Map<Character, List<Integer>> map2 = new LinkedHashMap<>();
+
+        if (characterArray1.length == 0 && characterArray2.length == 0) {
+            return true;
+        }
+
+        for (int i = 0; i < characterArray1.length; i++) {
+
+            if (map1.get(characterArray1[i]) == null) {
+                map1.put(characterArray1[i], new ArrayList<Integer>(Collections.singleton(i)));
+            } else {
+                map1.get(characterArray1[i]).add(i);
+            }
+
+            if (map2.get(characterArray2[i]) == null) {
+                map2.put(characterArray2[i], new ArrayList<Integer>(Collections.singleton(i)));
+            } else {
+                map2.get(characterArray2[i]).add(i);
+            }
+        }
+
+        Collection<List<Integer>> listValuesLists1 = map1.values();
+        Collection<List<Integer>> listValuesList2 = map2.values();
+
+        return listValuesLists1.equals(listValuesList2);
+    }
+
 }

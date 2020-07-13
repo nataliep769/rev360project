@@ -1,4 +1,4 @@
-package com.example.livongoquestion;
+package com.example.codingprep;
 
 public class ListNode {
     int data;
